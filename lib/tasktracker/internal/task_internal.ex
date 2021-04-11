@@ -16,7 +16,16 @@ defmodule TaskTracker.Internal do
       select: t)
 
     Repo.all(query)
+  end
 
+  def fetch_task(task_id) do
+    query =
+    from(t in Model,
+      select: t,
+      where: t.task_id == ^task_id
+    )
+
+    |> Repo.one()
   end
 
 

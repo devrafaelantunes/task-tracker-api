@@ -1,6 +1,11 @@
 defmodule TasktrackerWeb.TaskView do
   use TasktrackerWeb, :view
 
+
+  def render("index.json", %{tasks: tasks}) do
+    %{data: render_many(tasks, __MODULE__, "task.json")}
+  end
+
   def render("show.json", %{task: task}) do
     %{data: render_one(task, __MODULE__, "task.json")}
   end
@@ -12,6 +17,5 @@ defmodule TasktrackerWeb.TaskView do
       date: task.date,
       reminder: task.reminder
     }
-
   end
 end

@@ -9,6 +9,8 @@ defmodule TasktrackerWeb.Router do
     pipe_through :api
 
     post "/task", TaskController, :create
+    get "/task/:task_id", TaskController, :show
+    get "/task", TaskController, :index
   end
 
   # Enables LiveDashboard only for development
