@@ -3,30 +3,42 @@ defmodule TaskTracker.Internal do
   alias TaskTracker.Model, as: Model
   alias Tasktracker.Repo
 
-  import Ecto.Query
-
   def create_task(params) do
     Model.create_changeset(params)
     |> Repo.insert()
   end
 
   def get_tasks() do
-    query =
-      from(t in Model,
-      select: t)
-
-    Repo.all(query)
+    Model.query_tasks()
+    |> Repo.all()
   end
 
   def fetch_task(task_id) do
-    query =
-    from(t in Model,
-      select: t,
-      where: t.task_id == ^task_id
-    )
-
+    Model.query_task(task_id)
     |> Repo.one()
   end
 
+  def fetch_reminder_value(task_id) do
+    Model.query_reminder(task_id)
+    |> Repo.one()
+  end
 
+  def update_reminder(task_id) do
+    task =
+      fetch_task(task_id)
+
+    case fetch_reminder_value(task_id) do
+      true ->
+        Model.update(task, false)
+        |> Repo.update()
+      false ->
+        Model.update(task, true)
+        |> Repo.update()
+    end
+  end
+
+  def delete_task(task_id) do
+    fetch_task(task_id)
+    |> Repo.delete()
+  end
 end

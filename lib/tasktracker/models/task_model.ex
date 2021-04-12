@@ -1,6 +1,6 @@
 defmodule TaskTracker.Model do
   use Ecto.Schema
-  import Ecto.Changeset
+  import Ecto.{Changeset, Query}
 
 
   # Planejar put, delete, enfim...
@@ -26,5 +26,28 @@ defmodule TaskTracker.Model do
     |> validate_length(:task_name, max: 100)
     |> validate_length(:task_description, max: 250)
     |> validate_length(:date, min: 10, max: 10)
+  end
+
+  def update(task, value) do
+    change(task, reminder: value)
+  end
+
+  def query_reminder(task_id) do
+    from(t in TaskTracker.Model,
+      select: t.reminder,
+        where: t.task_id == ^task_id
+  )
+  end
+
+  def query_task(task_id) do
+    from(t in TaskTracker.Model,
+      select: t,
+        where: t.task_id == ^task_id
+  )
+  end
+
+  def query_tasks() do
+    from(t in TaskTracker.Model,
+      select: t)
   end
 end

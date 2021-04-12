@@ -20,11 +20,31 @@ defmodule TasktrackerWeb.TaskController do
     end
   end
 
-  def show(conn, %{"task_id" => task_id} = params) do
+  def show(conn, %{"task_id" => task_id} = _params) do
     render(conn, "show.json", task: Internal.fetch_task(task_id))
   end
 
-  def index(conn, params) do
+  def update(conn, %{"task_id" => task_id, "tasks" => _task}) do
+    case Internal.update_reminder(task_id) do
+      {:ok, %Model{} = task} ->
+        conn
+        |> render("show.json", task: task)
+
+      true ->
+        conn
+        |> put_status(:unprocessable_entity)
+    end
+  end
+
+  def delete(conn, %{"task_id" => task_id}) do
+    Internal.delete_task(task_id)
+
+    conn
+    |> send_resp(:no_content, "")
+
+  end
+
+  def index(conn, _params) do
     render(conn, "index.json", tasks: Internal.get_tasks())
   end
 

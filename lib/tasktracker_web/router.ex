@@ -10,6 +10,8 @@ defmodule TasktrackerWeb.Router do
 
     post "/task", TaskController, :create
     get "/task/:task_id", TaskController, :show
+    put "/task/:task_id", TaskController, :update
+    delete "/task/:task_id", TaskController, :delete
     get "/task", TaskController, :index
   end
 
