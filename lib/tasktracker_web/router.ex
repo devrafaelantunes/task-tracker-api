@@ -2,12 +2,17 @@ defmodule TasktrackerWeb.Router do
   use TasktrackerWeb, :router
 
   pipeline :api do
+    plug CORSPlug, origin: "*", allow_headers: ["content-type"]
     plug :accepts, ["json"]
+
+
   end
 
   scope "/api", TasktrackerWeb do
     pipe_through :api
 
+    options "/task", TaskController, :options
+    options "/task/:task_id", TaskController, :options
     post "/task", TaskController, :create
     get "/task/:task_id", TaskController, :show
     put "/task/:task_id", TaskController, :update

@@ -4,7 +4,7 @@ defmodule TasktrackerWeb.TaskController do
   alias TaskTracker.Internal, as: Internal
   alias TaskTracker.Model, as: Model
 
-  def create(conn, %{"tasks" => task}) do
+  def create(conn, task = %{}) do
     case Internal.create_task(task) do
       {:ok, %Model{} = task} ->
         conn
@@ -24,7 +24,7 @@ defmodule TasktrackerWeb.TaskController do
     render(conn, "show.json", task: Internal.fetch_task(task_id))
   end
 
-  def update(conn, %{"task_id" => task_id, "tasks" => _task}) do
+  def update(conn, %{"task_id" => task_id}) do
     case Internal.update_reminder(task_id) do
       {:ok, %Model{} = task} ->
         conn
