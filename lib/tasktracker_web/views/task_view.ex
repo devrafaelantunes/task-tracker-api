@@ -15,7 +15,8 @@ defmodule TasktrackerWeb.TaskView do
       task_id: task.task_id,
       task_name: task.task_name,
       date: task.date,
-      reminder: task.reminder
+      reminder: task.reminder,
+      task_description: task.task_description
     }
   end
 end

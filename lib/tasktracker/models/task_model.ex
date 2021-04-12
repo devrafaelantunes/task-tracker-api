@@ -25,7 +25,7 @@ defmodule TaskTracker.Model do
     #|> unique_constraint(:task_name)
     |> validate_length(:task_name, max: 100)
     |> validate_length(:task_description, max: 250)
-    |> validate_length(:date, min: 10, max: 10)
+    #|> validate_length(:date, min: 10, max: 10)
   end
 
   def update(task, value) do

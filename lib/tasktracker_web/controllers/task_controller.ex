@@ -5,6 +5,7 @@ defmodule TasktrackerWeb.TaskController do
   alias TaskTracker.Model, as: Model
 
   def create(conn, task = %{}) do
+    IO.inspect(task)
     case Internal.create_task(task) do
       {:ok, %Model{} = task} ->
         conn
