@@ -1,6 +1,7 @@
 defmodule TasktrackerWeb.TaskView do
   use TasktrackerWeb, :view
 
+  alias TaskTracker.Internal, as: Internal
 
   def render("index.json", %{tasks: tasks}) do
     %{data: render_many(tasks, __MODULE__, "task.json")}
@@ -17,7 +18,8 @@ defmodule TasktrackerWeb.TaskView do
       date: task.date,
       reminder: task.reminder,
       task_description: task.task_description,
-      task_count: task.tasks_completed
+      task_completed: task.completed,
+      task_count: Internal.fetch_count()
     }
   end
 end

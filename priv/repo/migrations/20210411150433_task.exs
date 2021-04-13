@@ -9,7 +9,6 @@ defmodule Tasktracker.Repo.Migrations.Task do
       add :date, :string
       add :reminder, :boolean
       add :completed, :boolean
-      add :tasks_completed, :integer
 
       timestamps()
     end

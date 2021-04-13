@@ -25,7 +25,7 @@ defmodule TasktrackerWeb.TaskController do
     render(conn, "show.json", task: Internal.fetch_task(task_id))
   end
 
-  def update(conn, %{"task_id" => task_id}) do
+  def update(conn, %{"option" => option, "task_id" => task_id}) when option == "reminder" do
     case Internal.update_reminder(task_id) do
       {:ok, %Model{} = task} ->
         conn
@@ -33,7 +33,20 @@ defmodule TasktrackerWeb.TaskController do
 
       true ->
         conn
-        |> put_status(:unprocessable_entity)
+
+    end
+  end
+
+  def update(conn, %{"option" => option, "task_id" => task_id}) when option == "complete_task" do
+    case Internal.update_completed(task_id) do
+      {:ok, %Model{} = task} ->
+        Internal.set_reminder_false(task_id)
+
+        conn
+        |> render("show.json", task: task)
+
+      true ->
+        conn
     end
   end
 

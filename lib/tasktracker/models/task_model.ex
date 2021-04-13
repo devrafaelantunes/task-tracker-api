@@ -2,6 +2,8 @@ defmodule TaskTracker.Model do
   use Ecto.Schema
   import Ecto.{Changeset, Query}
 
+  @tasks TaskTracker.Model
+
 
   # Planejar put, delete, enfim...
   # Task Schema
@@ -12,7 +14,6 @@ defmodule TaskTracker.Model do
     field :date, :string
     field :reminder, :boolean, default: false
     field :completed, :boolean, default: false
-    field :tasks_completed, :integer, default: 0
 
     timestamps()
   end
@@ -38,19 +39,19 @@ defmodule TaskTracker.Model do
     change(task, completed: value)
   end
 
-  def update_tasks_completed(task, value) do
-    change(task, tasks_completed: value + 1)
+  def query_count() do
+    from t in @tasks, select: count(t.completed), where: t.completed == true
   end
 
   def query_reminder(task_id) do
-    from(t in TaskTracker.Model,
+    from(t in @tasks,
       select: t.reminder,
         where: t.task_id == ^task_id
   )
   end
 
   def query_completed(task_id) do
-    from(t in TaskTracker.Model,
+    from(t in @tasks,
       select: t.completed,
         where: t.task_id == ^task_id
     )
@@ -58,20 +59,21 @@ defmodule TaskTracker.Model do
   end
 
   def query_task(task_id) do
-    from(t in TaskTracker.Model,
+    from(t in @tasks,
       select: t,
         where: t.task_id == ^task_id
   )
   end
 
   def query_tasks() do
-    from(t in TaskTracker.Model,
+    from(t in @tasks,
       select: t)
   end
 
-  def query_completed_value() do
-    from(t in TaskTracker.Model,
-      select: t.tasks_completed
+  def query_completed_value(task_id) do
+    from(t in @tasks,
+      select: t.tasks_completed,
+        where: t.task_id == ^task_id
     )
   end
 end
