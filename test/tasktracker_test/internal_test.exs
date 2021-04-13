@@ -2,7 +2,6 @@ defmodule TaskTracker.InternalTest do
   use ExUnit.Case, async: true
 
   #alias/imports
-  alias Tasktracker.Repo
   alias TaskTracker.Model, as: Model
   alias TaskTracker.Internal, as: Internal
 
@@ -36,7 +35,7 @@ defmodule TaskTracker.InternalTest do
     end
   end
 
-  describe "fetching" do
+  describe "testing querying and fetching" do
     test "fetching single task through the id" do
       assert {:ok, %Model{} = task} = create_task() # creating task
       assert %Model{} = Internal.fetch_task(task.task_id) # fetching task
