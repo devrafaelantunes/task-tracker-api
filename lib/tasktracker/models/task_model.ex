@@ -1,12 +1,18 @@
 defmodule TaskTracker.Model do
+  @moduledoc """
+    Module created to handle the Task Schema + Queries
+  """
+
+  #alias/imports
   use Ecto.Schema
   import Ecto.{Changeset, Query}
 
+  # - #
   @tasks TaskTracker.Model
 
 
-  # Planejar put, delete, enfim...
   # Task Schema
+  # task_id as primary key
   @primary_key{:task_id, :id, autogenerate: true}
   schema "tasks" do
     field :task_name, :string
@@ -18,9 +24,9 @@ defmodule TaskTracker.Model do
     timestamps()
   end
 
-  # How to handle dates ecto.
-  # Completar Task
-  # Create Changeset
+  @doc """
+    Recieve params from the client and returns a valid changeset ready to be inserted into the db.
+  """
   def create_changeset(params) do
     %__MODULE__{}
     |> cast(params, [:task_name, :task_description, :date, :reminder, :completed])
@@ -31,45 +37,69 @@ defmodule TaskTracker.Model do
     #|> validate_length(:date, min: 10, max: 10)
   end
 
+  @doc """
+    Update the reminder value (true/false).
+  """
   def update_reminder(task, value) do
     change(task, reminder: value)
   end
 
+  @doc """
+    Update the task completion value (true/false).
+  """
   def update_completed(task, value) do
     change(task, completed: value)
   end
 
+  @doc """
+    Query used to get the number of tasks completed.
+  """
   def query_count() do
     from t in @tasks, select: count(t.completed), where: t.completed == true
   end
 
+  @doc """
+    Query used to get the reminder value.
+  """
   def query_reminder(task_id) do
     from(t in @tasks,
       select: t.reminder,
         where: t.task_id == ^task_id
-  )
+    )
   end
 
+  @doc """
+    Query used to get the task completed value.
+  """
   def query_completed(task_id) do
     from(t in @tasks,
       select: t.completed,
         where: t.task_id == ^task_id
     )
-
   end
 
+  @doc """
+    Query single task through the id.
+  """
   def query_task(task_id) do
     from(t in @tasks,
       select: t,
         where: t.task_id == ^task_id
-  )
+    )
   end
 
+  @doc """
+    Querying all the tasks and sorting them by task_id and their completion status
+  """
   def query_tasks() do
     from(t in @tasks,
-      select: t)
+      select: t,
+      order_by: [t.completed, t.task_id])
   end
 
+  @doc """
+    Querying all tasks that holds the completed value true.
+  """
   def query_completed_value(task_id) do
     from(t in @tasks,
       select: t.tasks_completed,
