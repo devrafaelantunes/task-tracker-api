@@ -10,14 +10,19 @@ defmodule TasktrackerWeb.TaskController do
   alias TaskTracker.Internal, as: Internal
   alias TaskTracker.Model, as: Model
 
+  @params %{task_name: "Testing",
+    task_description: "TaskTracker",
+    date: "10/05/2021",
+    reminder: false,
+    completed: false}
+
 
   @doc """
     Handles POST request. Creates a new task.
 
     It returns an error if the data inserted is not correct.
   """
-  def create(conn, task = %{}) do
-    IO.inspect(task)
+  def create(conn, task = %{}) do #task = %{}
     case Internal.create_task(task) do
       {:ok, %Model{} = task} ->
         conn
