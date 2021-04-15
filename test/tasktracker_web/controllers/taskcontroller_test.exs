@@ -38,6 +38,11 @@ defmodule TaskControllerTest do
       }
     end
 
+    #todo:
+    #RECREATE USING INTERNAL
+    #TEST GET
+    #TEST INDEX -2
+
     test "creating a task when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.task_path(conn, :create), task = @invalid_params)
       assert json_response(conn, 422)["errors"] != %{}
