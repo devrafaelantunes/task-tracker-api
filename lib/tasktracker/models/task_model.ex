@@ -17,7 +17,7 @@ defmodule TaskTracker.Model do
   schema "tasks" do
     field :task_name, :string
     field :task_description, :string
-    field :date, :string
+    field :date, :date
     field :reminder, :boolean, default: false
     field :completed, :boolean, default: false
 
@@ -34,7 +34,6 @@ defmodule TaskTracker.Model do
     #|> unique_constraint(:task_name)
     |> validate_length(:task_name, max: 100)
     |> validate_length(:task_description, max: 250)
-    #|> validate_length(:date, min: 10, max: 10)
   end
 
   @doc """

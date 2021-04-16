@@ -9,6 +9,7 @@ defmodule TasktrackerWeb.TaskController do
   #alias/imports
   alias TaskTracker.Internal, as: Internal
   alias TaskTracker.Model, as: Model
+  alias TaskTracker.Utils, as: Utils
 
   @params %{task_name: "Testing",
     task_description: "TaskTracker",
@@ -22,8 +23,13 @@ defmodule TasktrackerWeb.TaskController do
 
     It returns an error if the data inserted is not correct.
   """
-  def create(conn, task = %{}) do #task = %{}
-    case Internal.create_task(task) do
+  def create(conn, task = %{}) do
+    task = Utils.atomify_map(task)
+
+    updated_task =
+      Map.merge(task, Utils.transform_date(task.date))
+
+    case Internal.create_task(updated_task) do
       {:ok, %Model{} = task} ->
         conn
         |> put_status(:created)

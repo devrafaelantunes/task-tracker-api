@@ -24,7 +24,7 @@ defmodule TaskControllerTest do
 
   describe "create" do
     test "creating a task when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.task_path(conn, :create), task = @params)
+      conn = post(conn, Routes.task_path(conn, :create), @params)
       assert %{"task_id" => task_id} = json_response(conn, 201)["data"]
 
       conn = get(conn, Routes.task_path(conn, :show, task_id))
@@ -44,7 +44,7 @@ defmodule TaskControllerTest do
     #TEST INDEX -2
 
     test "creating a task when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.task_path(conn, :create), task = @invalid_params)
+      conn = post(conn, Routes.task_path(conn, :create), @invalid_params)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
