@@ -1,19 +1,7 @@
-# Tasktracker
+# TaskTracker
+> a Simple web application, where you can keep up with your tasks and boost your productivity!
 
-To start your Phoenix server:
+This is the REST API repository, made in Elixir/Phoenix/
+To check the ReactJS code, go to: https://github.com/devrafaelantunes/task-tracker-js
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server`
-
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+# dev@rafaelantun.es
