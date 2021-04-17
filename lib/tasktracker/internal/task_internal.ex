@@ -3,7 +3,7 @@ defmodule TaskTracker.Internal do
     Module created to handle the internal interation with the DB through Repo
   """
 
-  #alias/imports
+  # alias/imports
   alias TaskTracker.Model, as: Model
   alias Tasktracker.Repo
 
@@ -59,13 +59,13 @@ defmodule TaskTracker.Internal do
     Updates the reminder based on their current value. If it's true update to false then vice-versa.
   """
   def update_reminder(task_id) do
-    task =
-      fetch_task(task_id)
+    task = fetch_task(task_id)
 
     case fetch_reminder_value(task_id) do
       true ->
         Model.update_reminder(task, false)
         |> Repo.update()
+
       false ->
         Model.update_reminder(task, true)
         |> Repo.update()
@@ -76,8 +76,7 @@ defmodule TaskTracker.Internal do
     Set reminder value to false.
   """
   def set_reminder_false(task_id) do
-    task =
-      fetch_task(task_id)
+    task = fetch_task(task_id)
 
     Model.update_reminder(task, false)
     |> Repo.update()
@@ -87,13 +86,13 @@ defmodule TaskTracker.Internal do
     Updates the completion value based on their current value. If it's true update to false then vice-versa.
   """
   def update_completed(task_id) do
-    task =
-      fetch_task(task_id)
+    task = fetch_task(task_id)
 
     case fetch_completed_value(task_id) do
       true ->
         Model.update_completed(task, false)
         |> Repo.update()
+
       false ->
         Model.update_completed(task, true)
         |> Repo.update()

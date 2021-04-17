@@ -1,8 +1,9 @@
 defmodule TaskTracker.Utils do
-
   import Date
+
   def transform_date(task) do
     [month, day, year] = String.split(task, "/")
+
     {:ok, date} =
       Date.new(String.to_integer(year), String.to_integer(month), String.to_integer(day))
 
@@ -30,7 +31,4 @@ defmodule TaskTracker.Utils do
   end
 
   def atomify_map(other), do: other
-
-
-
 end

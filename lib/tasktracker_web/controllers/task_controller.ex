@@ -6,17 +6,18 @@ defmodule TasktrackerWeb.TaskController do
   # - #
   use TasktrackerWeb, :controller
 
-  #alias/imports
+  # alias/imports
   alias TaskTracker.Internal, as: Internal
   alias TaskTracker.Model, as: Model
   alias TaskTracker.Utils, as: Utils
 
-  @params %{task_name: "Testing",
+  @params %{
+    task_name: "Testing",
     task_description: "TaskTracker",
     date: "10/05/2021",
     reminder: false,
-    completed: false}
-
+    completed: false
+  }
 
   @doc """
     Handles POST request. Creates a new task.
@@ -26,8 +27,7 @@ defmodule TasktrackerWeb.TaskController do
   def create(conn, task = %{}) do
     task = Utils.atomify_map(task)
 
-    updated_task =
-      Map.merge(task, Utils.transform_date(task.date))
+    updated_task = Map.merge(task, Utils.transform_date(task.date))
 
     case Internal.create_task(updated_task) do
       {:ok, %Model{} = task} ->
@@ -87,6 +87,4 @@ defmodule TasktrackerWeb.TaskController do
   def index(conn, _params) do
     render(conn, "index.json", tasks: Internal.get_tasks())
   end
-
-
 end

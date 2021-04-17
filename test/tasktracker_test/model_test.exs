@@ -1,22 +1,24 @@
 defmodule TaskTracker.ModelTest do
   use ExUnit.Case, async: true
 
-  #alias/import
+  # alias/import
   alias TaskTracker.Model, as: Model
 
-  #params
-  @params %{task_name: "Testing",
-  task_description: "TaskTracker",
-  date: "10/05/2021",
-  reminder: false,
-  completed: false}
+  # params
+  @params %{
+    task_name: "Testing",
+    task_description: "TaskTracker",
+    date: "10/05/2021",
+    reminder: false,
+    completed: false
+  }
 
-  #ecto setup
+  # ecto setup
   setup do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Tasktracker.Repo)
   end
 
-  #utils fun
+  # utils fun
   def create_changeset(params \\ @params) do
     Model.create_changeset(params)
   end
@@ -36,22 +38,30 @@ defmodule TaskTracker.ModelTest do
 
   describe "creating changeset" do
     test "creating task changeset with valid params" do
-      assert %Ecto.Changeset{} = changeset = create_changeset() # creating changeset
-      assert changeset.valid? == true # making sure the changeset is valid
+      # creating changeset
+      assert %Ecto.Changeset{} = changeset = create_changeset()
+      # making sure the changeset is valid
+      assert changeset.valid? == true
     end
 
     test "creating task changeset with missing params" do
       params = %{task_description: "Testing", date: "10/10/2020"}
-      assert %Ecto.Changeset{} = changeset = create_changeset(params) # creating changeset
-      assert changeset.valid? == false # making sure the changeset is not valid
-      assert changeset_error_to_string(changeset) == "task_name: can't be blank" # translating the error and asserting it
+      # creating changeset
+      assert %Ecto.Changeset{} = changeset = create_changeset(params)
+      # making sure the changeset is not valid
+      assert changeset.valid? == false
+      # translating the error and asserting it
+      assert changeset_error_to_string(changeset) == "task_name: can't be blank"
     end
 
     test "creating task changeset with invalid params" do
       params = %{task_description: "Testing", date: "10/10/2020", task_name: 101}
-      assert %Ecto.Changeset{} = changeset = create_changeset(params) # creating changeset
-      assert changeset.valid? == false # making sure the changeset is not valid
-      assert changeset_error_to_string(changeset) == "task_name: is invalid" # translating the error and asserting it
+      # creating changeset
+      assert %Ecto.Changeset{} = changeset = create_changeset(params)
+      # making sure the changeset is not valid
+      assert changeset.valid? == false
+      # translating the error and asserting it
+      assert changeset_error_to_string(changeset) == "task_name: is invalid"
     end
   end
 end

@@ -3,17 +3,16 @@ defmodule TaskTracker.Model do
     Module created to handle the Task Schema + Queries
   """
 
-  #alias/imports
+  # alias/imports
   use Ecto.Schema
   import Ecto.{Changeset, Query}
 
   # - #
   @tasks TaskTracker.Model
 
-
   # Task Schema
   # task_id as primary key
-  @primary_key{:task_id, :id, autogenerate: true}
+  @primary_key {:task_id, :id, autogenerate: true}
   schema "tasks" do
     field :task_name, :string
     field :task_description, :string
@@ -31,7 +30,7 @@ defmodule TaskTracker.Model do
     %__MODULE__{}
     |> cast(params, [:task_name, :task_description, :date, :reminder, :completed])
     |> validate_required([:task_name, :date, :reminder])
-    #|> unique_constraint(:task_name)
+    # |> unique_constraint(:task_name)
     |> validate_length(:task_name, max: 100)
     |> validate_length(:task_description, max: 250)
   end
@@ -63,7 +62,7 @@ defmodule TaskTracker.Model do
   def query_reminder(task_id) do
     from(t in @tasks,
       select: t.reminder,
-        where: t.task_id == ^task_id
+      where: t.task_id == ^task_id
     )
   end
 
@@ -73,7 +72,7 @@ defmodule TaskTracker.Model do
   def query_completed(task_id) do
     from(t in @tasks,
       select: t.completed,
-        where: t.task_id == ^task_id
+      where: t.task_id == ^task_id
     )
   end
 
@@ -83,7 +82,7 @@ defmodule TaskTracker.Model do
   def query_task(task_id) do
     from(t in @tasks,
       select: t,
-        where: t.task_id == ^task_id
+      where: t.task_id == ^task_id
     )
   end
 
@@ -93,7 +92,8 @@ defmodule TaskTracker.Model do
   def query_tasks() do
     from(t in @tasks,
       select: t,
-      order_by: [t.completed, t.task_id])
+      order_by: [t.completed, t.task_id]
+    )
   end
 
   @doc """
@@ -102,7 +102,7 @@ defmodule TaskTracker.Model do
   def query_completed_value(task_id) do
     from(t in @tasks,
       select: t.tasks_completed,
-        where: t.task_id == ^task_id
+      where: t.task_id == ^task_id
     )
   end
 end

@@ -4,8 +4,6 @@ defmodule TasktrackerWeb.Router do
   pipeline :api do
     plug CORSPlug, origin: "*", allow_headers: ["content-type"]
     plug :accepts, ["json"]
-
-
   end
 
   scope "/api", TasktrackerWeb do
